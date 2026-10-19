@@ -5,7 +5,7 @@
 #include <nfc/nfc.h>
 #include "freefare.h"
 
-//Global vars
+// Global vars
 nfc_context *context;
 nfc_device *device;
 static volatile int exit_flag = 1;
@@ -36,7 +36,9 @@ void reader_init()
     }
 }
 
-void run_loop(){
+// Main loop -> continuously polling for cards
+void run_loop()
+{
     while (exit_flag)
     {
         FreefareTag *tags = freefare_get_tags(device);
@@ -57,7 +59,7 @@ void run_loop(){
                             printf("\tTag UID: %s\n", uid);
                             free(uid);
                         }*/
-                       uid = freefare_get_tag_uid(tags[i]);
+                        uid = freefare_get_tag_uid(tags[i]);
                         if (uid)
                         {
                             printf("\tTag UID: %s\n", uid);
@@ -91,9 +93,8 @@ void run_loop(){
 int main(void)
 {
     signal(SIGINT, sigint_handler);
- 
-    reader_init();
 
+    reader_init();
 
     printf("NFC Reader opened successfully: %s\n", nfc_device_get_name(device));
     printf("Continuously polling for DESFire cards... Press Ctrl+C to exit.\n\n");
