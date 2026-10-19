@@ -16,8 +16,8 @@ $(LIB_BUILD)/libdesfire.so:
 	$(MAKE) -C $(LIB_DIR)
 
 $(TARGET): $(TARGET).c | $(LIB_BUILD)/libdesfire.so
-	gcc $(CFLAGS) $(CPPFLAGS) $< $(LDFLAGS) $(LDLIBS) -o $@
+	gcc $(CFLAGS) $(CPPFLAGS) $< $(LDFLAGS) $(LDLIBS) -o $@.bin
 
 clean:
 	$(MAKE) -C $(LIB_DIR) clean
-	rm -f $(TARGET)
+	rm -f $(TARGET).bin
