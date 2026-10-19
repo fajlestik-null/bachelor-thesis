@@ -2,6 +2,18 @@
 This repository is meant to be an extention of support for MIFARE DESFire EV2 &amp; EV3 standars in open-source library libfreefare.
 All the work is considered to be a part of my Bachelor thesis.
 
+# Backwards compatibility with libfreefare
+Files:
+```
+felica.c
+mad.c
+mifare_application.c
+mifare_classic.c
+mifare_ultralight.c
+ntag21x_error.c
+ntag21x.c
+```
+
 # Installation
 
 ## For UNIX systems
@@ -11,26 +23,25 @@ You can use released version (see **Download** section) or development version:
 First, ensure all dependencies are installed:
 * [libnfc](https://github.com/nfc-tools/libnfc);
 * git;
-* Autotools (autoconf, automake, libtool);
 * OpenSSL development package.
 ```
-apt-get install autoconf automake git libtool libssl-dev pkg-config
+sudo apt update
+sudo apt install build-essential pkg-config libnfc-dev libssl-dev libnfc-bin git
 ```
 
-Clone this repository:
+Edit **/etc/nfc/libnfc.conf**. Recomended configuration:
 ```
-git clone https://github.com/nfc-tools/libfreefare.git
-cd libfreefare
+allow_autoscan = true
+allow_intrusive_scan = false
+
+device.name = "nfc.usb.raeder"
+device.connstring = "pn532_uart:/dev/ttyUSB0:115200"
 ```
 
-Before compiling, remember to run:
+You can now compile **libfreefare** the usual Makefile way:
 ```
-autoreconf -vis
-```
-
-You can now compile **libfreefare** the usual autotools way:
-```
-./configure --prefix=/usr
+make clean
 make
-sudo make install
 ```
+
+
